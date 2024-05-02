@@ -22,11 +22,11 @@ async function main() {
 
 
   //---------//
-  const tokenIn = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1";
-  const tokenMiddle = "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8";
+  const tokenIn = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"; //random 4개중에 하나
+  const tokenMiddle = "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"; //random 100개중에 하나
 
 
-  const amount = ethers.parseEther("1");
+  const amount = ethers.parseEther("1"); //random 자산 조회 함수 호출
 
   const uniMinAmountOut = await contract.getAmountOutMin(tokenIn, tokenMiddle, amount);
   console.log("UniSwap Minimum Amount Out:", uniMinAmountOut);
