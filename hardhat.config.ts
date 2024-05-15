@@ -21,8 +21,8 @@ const config: HardhatUserConfig = {
     },
     hardhat: {
       forking: {
-        url: "https://rpc.ankr.com/arbitrum",
-        blockNumber: 203388121,
+        url: "https://arb1.arbitrum.io/rpc",
+        blockNumber: 211435038,
       },
       blockGasLimit: 0x1fffffffffff,
       gasPrice: 0,

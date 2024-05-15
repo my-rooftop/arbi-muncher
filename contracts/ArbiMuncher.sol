@@ -7,7 +7,6 @@ import { IERC20 } from "./interfaces/IERC20.sol";
 import { IUniswapV2Router } from "./interfaces/camelot/IRouter.sol";
 import { IGmxRouter } from "./interfaces/gmx/IGmxRouter.sol";
 import { IGmxReader } from "./interfaces/gmx/IGmxReader.sol";
-import "hardhat/console.sol";
 
 contract ArbiMuncher {
 
@@ -19,6 +18,7 @@ contract ArbiMuncher {
     }
 
     address public owner;
+    address public server;
 
     ContractAddress Add;
 
@@ -26,13 +26,29 @@ contract ArbiMuncher {
         address GmxRouterAddress,
         address GmxReaderAddress,
         address GmxVaultAddress,
-        address CamelotRouterAddress
+        address CamelotRouterAddress,
+        address Server
     ) {
         Add._GmxRouterAddress = GmxRouterAddress;
         Add._GmxReaderAddress = GmxReaderAddress;
         Add._GmxVaultAddress = GmxVaultAddress;
         Add._CamelotRouterAddress = CamelotRouterAddress;
         owner = msg.sender;
+        server = Server;
+    }
+
+    function swapUniOwner(address _tokenIn, address _tokenOut, uint256 _amount) public returns (uint256) {
+        require(msg.sender == owner || msg.sender == server, "not allowed");
+        return swapUni(_tokenIn, _tokenOut, _amount);
+    }
+
+    function swapGmxOwner(
+        address _tokenIn,
+        address _tokenOut,
+        uint256 _amount
+    ) public returns (uint256) {
+        require(msg.sender == owner || msg.sender == server, "not allowed");
+        return swapGmx(_tokenIn, _tokenOut, _amount);
     }
 
     function swapUni(address _tokenIn, address _tokenOut, uint256 _amount) private returns (uint256) {
@@ -139,7 +155,7 @@ contract ArbiMuncher {
         address _tokenMiddle,
         uint256 _amountBaseIn
     ) external {
-        require(msg.sender == owner, "not allowed");
+        require(msg.sender == owner || msg.sender == server, "not allowed");
 
         uint256 amountMiddelOut = swapUni(_tokenBase, _tokenMiddle, _amountBaseIn);
         uint256 amountBaseOut = swapGmx(_tokenMiddle, _tokenBase, amountMiddelOut);
@@ -152,7 +168,7 @@ contract ArbiMuncher {
         address _tokenMiddle,
         uint256 _amountBaseIn
     ) external {
-        require(msg.sender == owner, "not allowed");
+        require(msg.sender == owner || msg.sender == server, "not allowed");
 
         uint256 amountMiddleOut = swapGmx(_tokenBase, _tokenMiddle, _amountBaseIn);
         uint256 amountBaseOut = swapUni(_tokenMiddle, _tokenBase, amountMiddleOut);
@@ -177,6 +193,13 @@ contract ArbiMuncher {
         }
     }
     
+    function changeServerAddress(address _server) external {
+        require(msg.sender == owner, "not allowed");
+        server = _server;
+    }
 
-
+    function approveTokens(address _router, address _token, uint256 _amount) external {
+        require(msg.sender == owner, "not allowed");
+        IERC20(_token).approve(_router, _amount);
+    }
 }

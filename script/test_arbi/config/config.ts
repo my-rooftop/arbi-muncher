@@ -1,0 +1,10 @@
+export const camelotRouterAddress:string = "0xc873fEcbd354f5A56E00E710B90EF4201db2448d";
+export const gmxReaderAddress:string = "0x22199a49A999c351eF7927602CFB187ec3cae489";
+export const gmxRouterAddress:string = "0xaBBc5F99639c9B6bCb58544ddf04EFA6802F4064";
+export const vaultAddress:string = "0x489ee077994B6658eAfA855C308275EAd8097C4A";
+export const wethAddress:string = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1";
+export const usdcAddress:string = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831";
+export const tokenIn:string = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"; //random 4개중에 하나
+export const tokenMiddle:string = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"; //random 100개중에 하나
+export const serverAddress:string = "0x9836C0AA45f64DDc852A675858EBB59213F7aA82";
+export const arbimuncherAddress:string = "0x11b819E74771350484064bB8fA059Bb8Bf35090B";
